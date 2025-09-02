@@ -10,17 +10,17 @@ interface Result {
   average: number;
 }
 
-interface exerciseValues {
+export interface exerciseValues {
   hoursPerDay: number[];
-  targetHours: number;
+  target: number;
 }
 
 const parseArguments = (args: string[]): exerciseValues => {
   if (args.length < 4) throw new Error('Not enough arguments');
 
-  const [, , target, ...hours] = process.argv;
+  const [, , targetHours, ...hours] = process.argv;
 
-  if (isNotNumber(target)) {
+  if (isNotNumber(targetHours)) {
     throw new Error('Target hours was not a number');
   }
 
@@ -31,7 +31,7 @@ const parseArguments = (args: string[]): exerciseValues => {
 
   const result = {
     hoursPerDay: hoursPerDay,
-    targetHours: Number(target),
+    target: Number(targetHours),
   };
 
   return result;
@@ -75,13 +75,14 @@ export const calculateExercises = (hoursPerDay: number[], targetHours: number): 
   return result;
 };
 
-try {
-  const { hoursPerDay, targetHours } = parseArguments(process.argv);
-  console.log(calculateExercises(hoursPerDay, targetHours));
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong.';
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
+if (require.main === module)
+  try {
+    const { hoursPerDay, target } = parseArguments(process.argv);
+    console.log(calculateExercises(hoursPerDay, target));
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    console.log(errorMessage);
   }
-  console.log(errorMessage);
-}
