@@ -4,7 +4,9 @@
   "description": "Exercises for full stack web development course part 9 - TypeScript",
   "main": "index.ts",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "ts-node": "ts-node",
+    "calculateBmi": "ts-node bmiCalculator.ts"
   },
   "author": "Sami Heinimo",
   "license": "ISC",
