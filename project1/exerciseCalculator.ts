@@ -1,3 +1,5 @@
+import { isNotNumber } from './utils';
+
 interface Result {
   periodLength: number;
   trainingDays: number;
@@ -7,6 +9,33 @@ interface Result {
   target: number;
   average: number;
 }
+
+interface exerciseValues {
+  hoursPerDay: number[];
+  targetHours: number;
+}
+
+const parseArguments = (args: string[]): exerciseValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+
+  const [, , target, ...hours] = process.argv;
+
+  if (isNotNumber(target)) {
+    throw new Error('Target hours was not a number');
+  }
+
+  const hoursPerDay = hours.map((h) => Number(h));
+  if (hoursPerDay.some((h) => isNotNumber(h))) {
+    throw new Error('Hours per day -list contained an unnumerical value');
+  }
+
+  const result = {
+    hoursPerDay: hoursPerDay,
+    targetHours: Number(target),
+  };
+
+  return result;
+};
 
 const calculateExercises = (hoursPerDay: number[], targetHours: number): Result => {
   const averageHours = hoursPerDay.reduce((sum, d) => sum + d, 0) / hoursPerDay.length;
@@ -44,4 +73,13 @@ const calculateExercises = (hoursPerDay: number[], targetHours: number): Result 
   return result;
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { hoursPerDay, targetHours } = parseArguments(process.argv);
+  console.log(calculateExercises(hoursPerDay, targetHours));
+} catch (error: unknown) {
+  let errorMessage = 'Something went wrong.';
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  }
+  console.log(errorMessage);
+}
