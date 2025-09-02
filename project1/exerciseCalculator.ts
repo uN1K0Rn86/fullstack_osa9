@@ -39,7 +39,7 @@ const parseArguments = (args: string[]): exerciseValues => {
 
 type numericalRating = 3 | 2 | 1;
 
-const calculateExercises = (hoursPerDay: number[], targetHours: number): Result => {
+export const calculateExercises = (hoursPerDay: number[], targetHours: number): Result => {
   const averageHours = hoursPerDay.reduce((sum, d) => sum + d, 0) / hoursPerDay.length;
   const numericalRating = (averageHours: number, targetHours: number): numericalRating => {
     if (averageHours >= targetHours) {
