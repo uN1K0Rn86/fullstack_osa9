@@ -26,7 +26,7 @@ const getSafePatients = (): SafePatientEntry[] => {
   }));
 };
 
-const addPatient = (entry: NewPatientEntry) => {
+const addPatient = (entry: NewPatientEntry): PatientEntry => {
   const id: string = uuid();
   const newPatient: PatientEntry = {
     id: id,
