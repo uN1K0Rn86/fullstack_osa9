@@ -1,13 +1,16 @@
 import patientData from '../../data/patients';
+import { v1 as uuid } from 'uuid';
 
-import { PatientEntry, SafePatientEntry } from '../../types';
+import { NewPatientEntry, PatientEntry, SafePatientEntry } from '../../types';
+
+const patients = patientData;
 
 const getPatients = (): PatientEntry[] => {
-  return patientData;
+  return patients;
 };
 
 const getSafePatients = (): SafePatientEntry[] => {
-  return patientData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+  return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
     name,
     dateOfBirth,
@@ -16,4 +19,15 @@ const getSafePatients = (): SafePatientEntry[] => {
   }));
 };
 
-export default { getPatients, getSafePatients };
+const addPatient = (entry: NewPatientEntry) => {
+  const id: string = uuid();
+  const newPatient: PatientEntry = {
+    id: id,
+    ...entry,
+  };
+
+  patients.push(newPatient);
+  return newPatient;
+};
+
+export default { getPatients, getSafePatients, addPatient };
