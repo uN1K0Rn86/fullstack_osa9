@@ -2,8 +2,15 @@ import patientData from '../../data/patients';
 import { v1 as uuid } from 'uuid';
 
 import { NewPatientEntry, PatientEntry, SafePatientEntry } from '../../types';
+import { toNewPatientEntry } from '../utils';
 
-const patients = patientData;
+const data = patientData;
+
+const patients: PatientEntry[] = data.map(obj => {
+  const object = toNewPatientEntry(obj) as PatientEntry;
+  object.id = obj.id;
+  return object;
+});
 
 const getPatients = (): PatientEntry[] => {
   return patients;
