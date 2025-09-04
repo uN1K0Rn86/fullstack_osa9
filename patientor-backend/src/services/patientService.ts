@@ -1,22 +1,27 @@
 import patientData from '../../data/patients';
 import { v1 as uuid } from 'uuid';
 
-import { NewPatientEntry, PatientEntry, SafePatientEntry } from '../../types';
+import { NewPatient, Patient, SafePatient } from '../../types';
 import { toNewPatientEntry } from '../utils';
 
 const data = patientData;
 
-const patients: PatientEntry[] = data.map(obj => {
-  const object = toNewPatientEntry(obj) as PatientEntry;
+const patients: Patient[] = data.map(obj => {
+  const object = toNewPatientEntry(obj) as Patient;
   object.id = obj.id;
   return object;
 });
 
-const getPatients = (): PatientEntry[] => {
+const getPatients = (): Patient[] => {
   return patients;
 };
 
-const getSafePatients = (): SafePatientEntry[] => {
+const findById = (id: string): Patient | undefined => {
+  const patient = patients.find(p => p.id === id);
+  return patient;
+};
+
+const getSafePatients = (): SafePatient[] => {
   return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
     name,
@@ -26,9 +31,9 @@ const getSafePatients = (): SafePatientEntry[] => {
   }));
 };
 
-const addPatient = (entry: NewPatientEntry): PatientEntry => {
+const addPatient = (entry: NewPatient): Patient => {
   const id: string = uuid();
-  const newPatient: PatientEntry = {
+  const newPatient: Patient = {
     id: id,
     ...entry,
   };
@@ -37,4 +42,4 @@ const addPatient = (entry: NewPatientEntry): PatientEntry => {
   return newPatient;
 };
 
-export default { getPatients, getSafePatients, addPatient };
+export default { getPatients, getSafePatients, addPatient, findById };
