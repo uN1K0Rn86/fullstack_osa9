@@ -1,4 +1,4 @@
-import type { CoursePart } from "../App";
+import type { CoursePart } from "../types";
 import Part from "./Part";
 
 interface ContentProps {

@@ -1,0 +1,9 @@
+td {
+  padding-right: 1em;
+  border: 1px solid black;
+}
+
+table {
+  border: 2px solid black;
+  border-radius: 3%;
+}
