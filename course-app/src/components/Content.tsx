@@ -1,34 +1,20 @@
-type coursePart = {
-  name: string;
-  exerciseCount: number;
-};
+import type { CoursePart } from "../App";
+import Part from "./Part";
 
 interface ContentProps {
-  parts: coursePart[];
+  parts: CoursePart[];
 }
 
 const Content = (props: ContentProps) => {
   return (
-    <table>
-      <thead>
-        <tr>
-          <td>
-            <b>Name</b>
-          </td>
-          <td>
-            <b>Exercises</b>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        {props.parts.map((p) => (
-          <tr key={p.name}>
-            <td>{p.name}</td>
-            <td>{p.exerciseCount}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      {props.parts.map((p) => (
+        <div key={p.name}>
+          <Part part={p} />
+          <br />
+        </div>
+      ))}
+    </div>
   );
 };
 
