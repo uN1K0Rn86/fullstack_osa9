@@ -1,14 +1,14 @@
 import express, { NextFunction, Request, Response } from 'express';
 import patientService from '../services/patientService';
 import { NewPatient, Patient, SafePatient } from '../../types';
-import { NewEntrySchema } from '../utils';
+import { NewPatientSchema } from '../utils';
 import { z } from 'zod';
 
 const router = express.Router();
 
 const newPatientParser = (req: Request, _res: Response, next: NextFunction) => {
   try {
-    NewEntrySchema.parse(req.body);
+    NewPatientSchema.parse(req.body);
     next();
   } catch (error: unknown) {
     next(error);
