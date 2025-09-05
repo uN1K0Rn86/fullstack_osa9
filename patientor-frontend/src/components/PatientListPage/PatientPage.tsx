@@ -3,12 +3,16 @@ import { Typography } from "@mui/material";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
 import TransgenderIcon from "@mui/icons-material/Transgender";
-import { Gender, Patient } from "../../types";
+import { Diagnosis, Gender, Patient } from "../../types";
 import patientService from "../../services/patients";
 import { useEffect, useState } from "react";
 import PatientEntry from "./PatientEntry";
 
-const PatientPage = () => {
+interface Props {
+  diagnoses: Diagnosis[];
+}
+
+const PatientPage = ({ diagnoses }: Props) => {
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient | null>(null);
 
@@ -40,8 +44,8 @@ const PatientPage = () => {
       <br />
       <Typography variant="h6">Entries: </Typography>
       {patient.entries.map((e) => (
-        <div>
-          <PatientEntry key={e.id} entry={e} />
+        <div key={e.id}>
+          <PatientEntry entry={e} diagnoses={diagnoses} />
         </div>
       ))}
     </div>
