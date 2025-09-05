@@ -1,7 +1,7 @@
 import patientData from '../../data/patients';
 import { v1 as uuid } from 'uuid';
 
-import { NewPatient, Patient, SafePatient } from '../../types';
+import { NewPatient, Patient, SafePatient } from '../types';
 import { toNewPatientEntry } from '../utils';
 
 const data = patientData;
@@ -35,6 +35,7 @@ const addPatient = (entry: NewPatient): Patient => {
   const id: string = uuid();
   const newPatient: Patient = {
     id: id,
+    entries: [],
     ...entry,
   };
 
