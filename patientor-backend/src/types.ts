@@ -1,6 +1,3 @@
-import { z } from 'zod';
-import { EntrySchema } from './utils';
-
 export enum Gender {
   Male = 'male',
   Female = 'female',
@@ -30,7 +27,31 @@ export interface SickLeave {
   endDate: string;
 }
 
-export type Entry = z.infer<typeof EntrySchema>;
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Array<Diagnosis['code']>;
+}
+
+interface HealthCheckEntry extends BaseEntry {
+  type: 'HealthCheck';
+  healthCheckRating: HealthCheckRating;
+}
+
+interface HospitalEntry extends BaseEntry {
+  type: 'Hospital';
+  discharge: Discharge;
+}
+
+interface OccupationalHealthcareEntry extends BaseEntry {
+  type: 'OccupationalHealthcare';
+  employerName: string;
+  sickLeave?: SickLeave;
+}
+
+export type Entry = HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry;
 
 export interface Patient {
   id: string;

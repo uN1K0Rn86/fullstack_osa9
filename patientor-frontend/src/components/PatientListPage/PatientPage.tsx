@@ -6,6 +6,7 @@ import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Gender, Patient } from "../../types";
 import patientService from "../../services/patients";
 import { useEffect, useState } from "react";
+import PatientEntry from "./PatientEntry";
 
 const PatientPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -34,9 +35,15 @@ const PatientPage = () => {
       <Typography variant="h4">
         {patient.name} {genderIcons[patient.gender]}
       </Typography>
-      SSN: {patient.ssn}
+      <Typography variant="body1">SSN: {patient.ssn}</Typography>
+      <Typography variant="body1">Occupation: {patient.occupation}</Typography>
       <br />
-      Occupation: {patient.occupation}
+      <Typography variant="h6">Entries: </Typography>
+      {patient.entries.map((e) => (
+        <div>
+          <PatientEntry key={e.id} entry={e} />
+        </div>
+      ))}
     </div>
   );
 };
